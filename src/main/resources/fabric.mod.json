@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "cdvtmoremobheads",
+  "version": "${version}",
+  "name": "CDVT More Mob Heads",
+  "description": "Mod extends VanillaTweaks' concept of more mob heads making them drop from charged creepers.\n\nCredits:\nVanilla Tweaks: https://vanillatweaks.net/",
+  "authors": ["prplrose", "Vanilla Tweaks"],
+  "contact": {},
+  "license": "https://vanillatweaks.net/terms/",
+  "icon": "assets/cdvtmoremobheads/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.github.prplrose.cdvtmoremobheads.CDVTMoreMobHeads"
+    ]
+  },
+  "mixins": [
+    "cdvtmoremobheads.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
