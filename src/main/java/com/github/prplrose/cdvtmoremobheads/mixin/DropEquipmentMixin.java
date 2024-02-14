@@ -29,7 +29,7 @@ public class DropEquipmentMixin extends LivingEntity {
     }
     @Shadow public Iterable<ItemStack> getArmorItems() {return null;}
     @Shadow public ItemStack getEquippedStack(EquipmentSlot slot) {return null;}
-    @Shadow public void equipStack(EquipmentSlot slot, ItemStack stack){};
+    @Shadow public void equipStack(EquipmentSlot slot, ItemStack stack){}
     @Shadow public Arm getMainArm() {return null;}
 
 
@@ -54,29 +54,29 @@ public class DropEquipmentMixin extends LivingEntity {
         if (mob instanceof PiglinEntity){
             return;
         }
-        if (mob instanceof EnderDragonEntity){
-            this.dropStack(new ItemStack(Items.DRAGON_HEAD));
-            EnderDragonFight enderDragonFight = ((EnderDragonEntity)mob).getFight();
-            if(enderDragonFight == null){
-                return;
-            }
-            ServerBossBar bossBar = ((BossBarAccessor)enderDragonFight).getBossBar();
-            for (ServerPlayerEntity player : bossBar.getPlayers()){
-                MinecraftServer server = mob.getServer();
-                if (server == null){
-                    return;
-                }
-                AdvancementEntry advancement = server.getAdvancementLoader().get(new Identifier("end/cdvtmoremobheads_creeper_kill"));
-                AdvancementProgress advancementProgress = player.getAdvancementTracker().getProgress(advancement);
-                for(String string : advancementProgress.getUnobtainedCriteria()) {
-                    player.getAdvancementTracker().grantCriterion(advancement, string);
-                }
-            }
-            return;
-        }
 
         Entity attacker = source.getAttacker();
         if (attacker instanceof CreeperEntity creeperEntity && creeperEntity.shouldDropHead()) {
+            if (mob instanceof EnderDragonEntity){
+                this.dropStack(new ItemStack(Items.DRAGON_HEAD));
+                EnderDragonFight enderDragonFight = ((EnderDragonEntity)mob).getFight();
+                if(enderDragonFight == null){
+                    return;
+                }
+                ServerBossBar bossBar = ((BossBarAccessor)enderDragonFight).getBossBar();
+                for (ServerPlayerEntity player : bossBar.getPlayers()){
+                    MinecraftServer server = mob.getServer();
+                    if (server == null){
+                        return;
+                    }
+                    AdvancementEntry advancement = server.getAdvancementLoader().get(new Identifier("end/cdvtmoremobheads_creeper_kill"));
+                    AdvancementProgress advancementProgress = player.getAdvancementTracker().getProgress(advancement);
+                    for(String string : advancementProgress.getUnobtainedCriteria()) {
+                        player.getAdvancementTracker().grantCriterion(advancement, string);
+                    }
+                }
+                return;
+            }
             creeperEntity.onHeadDropped();
             ItemStack skullStack = Heads.getHead(mob);
             this.dropStack(skullStack);
